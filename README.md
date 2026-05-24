@@ -51,7 +51,8 @@ Here is how I processed the data from start to finish, broken down into six main
 ## 📂 Repository Contents
 
 * `README.md` — You are here! An overview of my project and process
-* here is the link of google drive here i uploded all the raw data , reference genome, alligned files ,filtered files , mpileup file , trimmed files , bam files , sam files , vcf files and all the results i got by analyzing my raw E.Coli reads by NGS https://drive.google.com/drive/folders/1vekZhgcC3MPvkqVY1DhRjfRGTBqeZySW?usp=drive_link
+* I have uploaded some files in this repository due to large size of files its not possible to add all of them here so to have a look on all the files including raw data results im providing the link of google drive here as i have uploaded all the raw data , reference genome, alligned files ,filtered files , mpileup file , trimmed files , bam files , sam files , vcf files and all the results i got by analyzing my raw E.Coli reads by NGS https://drive.google.com/drive/folders/1vekZhgcC3MPvkqVY1DhRjfRGTBqeZySW?usp=drive_link
+  
 
 ---
 
