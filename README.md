@@ -1,3 +1,6 @@
+Updated ( 07.06.2026) : Added SRA Toolkit integration for raw data retrieval (prefetch & fasterq-dump)
+Download SRA Toolkit : https://github.com/ncbi/sra-tools/wiki/01.-Downloading-SRA-Toolkit
+
 # 🧬 Analyzing E. coli Genomes: A Step-by-Step NGS Pipeline
 
 Welcome to my repository! In this project, I took raw genomic sequencing data from *Escherichia coli*, ran it through a complete Next-Generation Sequencing (NGS) pipeline, and identified genetic variants. 
@@ -20,29 +23,58 @@ For this analysis, I fetched real-world sequence data from the NCBI public datab
 
 ## 🛠️ My Workflow & Roadmap
 
-Here is how I processed the data from start to finish, broken down into six main phases:
+But first , Here is how I processed the data from start to finish, broken down into six main phases:
+## 📥 Data Retrieval using SRA Toolkit
+
+Before starting the analysis, raw sequencing data was retrieved from **NCBI SRA** using the SRA Toolkit.
+
+```bash
+prefetch SRS13996491
+fasterq-dump SRS13996491
+```
+
+📌 Output:
+
+* `SRS13996491.fastq` *(Single-end reads used in this project)*
+
+💡 For paired-end datasets, the following command splits reads into forward and reverse files:
+
+```bash
+fasterq-dump SRRXXXXXXX --split-files
+```
+
+Output:
+
+* `SRRXXXXXXX_1.fastq` (R1) Forward Reads
+* `SRRXXXXXXX_2.fastq` (R2) Reverse Reads
 
 ### 🔍 Phase 1: Initial Quality Control
+
 * **Tool Used:** `FastQC`
 * **What I did:** Before jumping into analysis, I checked the overall health of the raw FASTQ files. This step let me evaluate base quality scores, find any adapter contamination, and spot anomalies in the raw sequencing data.
 
 ### ✂️ Phase 2: Data Cleaning & Trimming
+
 * **Tool Used:** `Trimmomatic (v0.39)`
 * **What I did:** Raw data is always a bit noisy. I used specific thresholds to slice away low-quality bases at the ends of reads and strip out technical adapter sequences. This ensured only high-quality data moved forward.
 
 ### 🗺️ Phase 3: Mapping to the Reference
+
 * **Tool Used:** `BWA` (Burrows-Wheeler Aligner)
 * **What I did:** With clean reads in hand, I mapped them back onto the *E. coli* K-12 genome sequence. This step aligns the short puzzle pieces of sequencing data to their correct locations on the reference blueprint.
 
 ### 🗂️ Phase 4: Organizing the Files
+
 * **Tool Used:** `Samtools`
 * **What I did:** Raw alignment files (SAM format) are massive and unorganized. I used Samtools to convert them into a compressed binary format (BAM), sort them by genomic coordinates, and index them so software could read them quickly.
 
 ### 🧬 Phase 5: Variant Calling
+
 * **Tool Used:** `BCFtools`
 * **What I did:** This is where the real magic happens. By comparing my aligned data against the reference strain, I isolated the exact points of difference—specifically identifying single-letter changes (SNPs) and tiny insertions or deletions (Indels).
 
 ### 🖥️ Phase 6: Visualizing the Results
+
 * **Tool Used:** `IGV` (Integrative Genomics Viewer)
 * **What I did:** To wrap things up and double-check the results, I loaded the alignment files and variants into IGV. This allowed me to visually inspect the genomic data and confirm the variants with my own eyes.
 
